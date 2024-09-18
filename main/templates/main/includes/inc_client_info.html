@@ -1,0 +1,21 @@
+
+
+<div class="px-5 col">
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+            <p class="card-text">{{object.first_name}}<br>
+                {{object.last_name}}<br>
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary"
+                       href="{% url 'main:client_detail' object.pk %}" role="button">Подробнее</a>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

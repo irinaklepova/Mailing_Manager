@@ -1,0 +1,101 @@
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">Mailing Service</a>
+    <a class="navbar-brand fs-6">
+
+        {% if user.is_authenticated %}
+        Вход выполнен:
+        {{ user.email }}
+        {% else %}
+        Необходима авторизация
+        {% endif %}
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark"
+            aria-controls="offcanvasNavbarDark" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark"
+         aria-labelledby="offcanvasNavbarDarkLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Меню</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'main:home_view' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'blogs:blogs_list' %}">Блог</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:profile' %}">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+                </li>
+
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Управление клиентами
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'main:client_list' %}">Просмотр клиентов</a></li>
+                        {% if user.is_superuser or not user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'main:client_create' %}">Создание клиента</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Управление письмами
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'main:message_list' %}">Просмотр писем</a></li>
+                        {% if user.is_superuser or not user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'main:message_create' %}">Создание письма</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Управление рассылками
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'main:mailing_list' %}">Просмотр рассылок</a></li>
+                        {% if user.is_superuser or not user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'main:mailing_create' %}">Создание рассылки</a></li>
+                        {% endif %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'main:log_list' %}">Отчет проведенных рассылок</a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if user.is_superuser or user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:manager' %}">Менеджер</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Администрирование</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

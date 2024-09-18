@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block title %}
+<h1 class="px-5 fw-light">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-3">
+
+        <div class="col-md-8">
+            <div class="card-body">
+
+
+                <table class="table table-hover ">
+                    <tr>
+                        <th scope="col"><h5>Рассылка № {{ object.pk }}</h5></th>
+                        <th scope="col"><h5></h5></th>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Тема письма:</th>
+                        <td>{{ object.letter }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Начало рассылки:</th>
+                        <td>{{ object.start_time|date:'d.m.Y H:i' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Окончание рассылки:</th>
+                        <td>{{ object.end_time|date:'d.m.Y H:i' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Периодичность:</th>
+                        <td>{{ object.periodicity }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Адресаты:</th>
+                        <td>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                {% for client in object.clients.all %}
+                                <li>
+
+                                    {{ client.email }}
+
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Статус:</th>
+                        <td>{{ object.status }}</td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+            <a class="btn btn-outline-dark"
+               href="{% url 'main:mailing_list' %}" role="button">Рассылки</a>
+            {% if user == object.owner %}
+            <a class="btn btn-outline-warning"
+               href="{% url 'main:mailing_update' object.pk %}" role="button">Редактировать</a>
+            {% endif %}
+            {% if user.is_superuser or user == object.owner %}
+            <a class="btn btn-outline-danger"
+               href="{% url 'main:mailing_delete' object.pk %}" role="button">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

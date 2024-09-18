@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+<h1 class="px-5 fw-light">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for object in object_list %}
+                {% include 'main/includes/inc_client_info.html' %}
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

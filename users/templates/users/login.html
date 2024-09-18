@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container text-left">
+    <div class="row ">
+        <div class="col-sm-12">
+            <form method="post" class="row" enctype="multipart/form-data">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Вход
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-outline-success">
+                                Войти
+                            </button>
+                            <p>Забыли пароль? Нажмите для восстановления:
+                                <a href="{% url 'users:recovery_password' %}">Восстановить пароль</a></p>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block title %}
+<h1 class="px-5 fw-light">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{object.image | mymedia }}" class="img-fluid rounded-start">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Карточка клиента</h5>
+                    <p class="card-text">
+                        {{object.last_name}} <br>
+                        {{object.first_name}} <br>
+                        {{object.patronymic}} <br>
+                        {{object.email}} <br>
+                        {{object.comment}} <br>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+            <a class="btn btn-outline-dark"
+               href="{% url 'main:client_list' %}" role="button">Клиенты</a>
+            {% if user == object.owner %}
+            <a class="btn btn-outline-warning"
+               href="{% url 'main:client_update' object.pk %}" role="button">Редактировать</a>
+            {% endif %}
+            {% if user.is_superuser or user == object.owner %}
+            <a class="btn btn-outline-danger"
+               href="{% url 'main:client_delete' object.pk %}" role="button">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
