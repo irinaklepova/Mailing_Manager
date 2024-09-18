@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="p-5 row text-center">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Рассылки</h3></div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td>Количество рассылок всего</td>
+                        <td>{{ mailing_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Количество активных рассылок</td>
+                        <td>{{ active_mailing_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Количество уникальных клиентов для рассылок</td>
+                        <td>{{ unique_clients_count }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 px-5 text-center">
+    <h3>Статьи блога</h3>
+</div>
+<div class="p-5 row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+    {% for object in random_blogs %}
+
+    <div class="col-lg-4">
+        <div style="height: 100px;">
+            <div class="card">
+                <img src="{{object.preview | mymedia }}" class="min-vh-25" class="rounded-circle" alt="...">
+                <h5 class="fw-normal">{{ object.title }}</h5>
+
+                <p>
+                    <a class="btn btn-sm btn-dark" href="{% url 'blogs:blogs_detail' object.pk %}"
+                       role="button">Подробнее</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
