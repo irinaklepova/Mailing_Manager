@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+<h1 class="px-5 fw-light">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="p-5 col-10">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Начало рассылки</th>
+                <th scope="col">Окончание рассылки</th>
+                <th scope="col">Письмо</th>
+                <th scope="col">Подробнее</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% for object in object_list %}
+            <tr>
+                <td scope="row">{{ object.start_time|date:'d.m.Y H:i' }}</td>
+                <td>{{ object.end_time|date:'d.m.Y H:i' }}</td>
+                <td>{{ object.letter }}</td>
+                <td>
+                    {% if object.is_active %}
+                    <a href="{% url 'main:mailing_activity' object.pk %}"
+                       class="btn btn-sm btn-outline-dark">Отключить</a>
+                    {% else %}
+                    <a href="{% url 'main:mailing_activity' object.pk %}"
+                       class="btn btn-sm btn-dark">Включить</a>
+                    {% endif %}
+
+                </td>
+                <td>
+                    {% if user == object.owner or user.is_superuser or user.is_staff%}
+                    <a class="btn btn-sm btn-outline-secondary"
+                       href="{% url 'main:mailing_detail' object.pk %}" role="button">Перейти</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
