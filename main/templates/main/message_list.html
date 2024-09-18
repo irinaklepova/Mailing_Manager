@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+<h1 class="px-5 fw-light">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="p-2 row-12">
+    <div class="p-2 col-12">
+        <div class="contaner">
+            {% for object in object_list %}
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                <div class="border border-dark px-2 mb-2 ">
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                {{ object.title }}
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+
+                                <a href="{% url 'main:message_detail' object.pk %}" class="link-body-emphasis">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
